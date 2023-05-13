@@ -1,6 +1,9 @@
 import requests
+import logging
 from django.core.management.base import BaseCommand
 from weather_news.models import Weather, News
+
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     help = 'Collects data from external APIs and stores it in the database.'
@@ -25,8 +28,10 @@ class Command(BaseCommand):
                     temperature=temperature,
                     weather=weather
                 )
+                logger.info('Saved weather for %s: %s°C - %s', city, temperature, weather)
                 print(f'Saved weather for {city}: {temperature}°C - {weather}')
             else:
+                logger.warning('Failed to fetch weather data for %s.', city)
                 print(f'Failed to fetch weather data for {city}.')
 
         # Fetch news data from NewsAPI
@@ -47,7 +52,9 @@ class Command(BaseCommand):
                     source=source,
                     author=author
                 )
+                logger.info('Saved news article: %s', title)
                 print(f'Saved news article: {title}')
         else:
+            logger.error('Failed to fetch news data from NewsAPI.')
             print('Failed to fetch news data from NewsAPI.')
 
