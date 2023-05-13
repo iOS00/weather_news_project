@@ -1,6 +1,5 @@
 Project Description
 
-Project Description:
 This project is a Django-based web application that provides weather and news data. It utilizes external APIs to collect data and stores it in a database. The application exposes an API for retrieving weather and news information.
 
     Weather Data Collection:
